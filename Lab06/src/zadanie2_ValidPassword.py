@@ -18,8 +18,12 @@ class ValidPassword:
         >>> validate.checkPassword("abc")
         'Too short length, at least 8 characters'
         >>> validate.checkPassword('AaBcCdDeEfF')
-        True
+        False
         >>> validate.checkPassword('abcdefgh')
+        False
+        >>> validate.checkPassword('ABc123abc')
+        True
+        >>> validate.checkPassword('abc123abc')
         False
 
         """
@@ -27,11 +31,18 @@ class ValidPassword:
             raise TypeError("Wrong type")
         if len(password) < 8:
             return 'Too short length, at least 8 characters'
+        capitalLetter = False
+        containNumber = False
         for letter in password:
-            capitalLetter = False
+            number = "0123456789"
             if letter.isupper():
                 capitalLetter = True
-            return capitalLetter
+            if letter in number:
+                containNumber = True
+        if containNumber and capitalLetter == containNumber:
+            return True
+        else:
+            return False
 
 
 class ValidPasswordTest(unittest.TestCase):
@@ -45,10 +56,16 @@ class ValidPasswordTest(unittest.TestCase):
         self.assertEqual('Too short length, at least 8 characters', self.temp.checkPassword("abc"))
 
     def test_password_capital_letter1(self):
-        self.assertEqual(self.temp.checkPassword('AaBcCdDeEfF'), True)
+        self.assertEqual(self.temp.checkPassword('AaBcCdDeEfF'), False)
 
     def test_password_capital_letter2(self):
         self.assertEqual(self.temp.checkPassword('abcdefgh'), False)
+
+    def test_password_without_special_char_positive(self):
+        self.assertEqual(self.temp.checkPassword('ABc123abc'), True)
+
+    def test_password_without_special_char_negative(self):
+        self.assertEqual(self.temp.checkPassword('abc123abc'), False)
 
     def tearDown(self):
         self.temp = None
