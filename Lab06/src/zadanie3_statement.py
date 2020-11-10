@@ -117,6 +117,21 @@ class TestStatement(unittest.TestCase):
                    "You earned 2 credits\n"
         self.assertEqual(statement(invoice, plays), response)
 
+    def test_statement_type_error(self):
+        invoice = {
+            "customer": "BigCo",
+            "performances": [
+                {
+                    "playID": "othello",
+                    "audience": 55
+                }
+            ]
+        }
+        plays = {
+            "othello": {"name": "Othello", "type": "unknown"}
+        }
+        self.assertRaises(ValueError, statement, invoice, plays)
+
 
 if __name__ == '__main__':
     unittest.main()
