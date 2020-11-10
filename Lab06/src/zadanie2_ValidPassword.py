@@ -15,9 +15,13 @@ class ValidPassword:
           File "C:/Users/dell/testowanieLab6/Lab06/src/zadanie2_ValidPassword.py", line 11, in checkPassword
             raise TypeError("Wrong type")
         TypeError: Wrong type
+        >>> validate.checkPassword("abc")
+        'Too short length, at least 8 characters'
         """
         if type(password) != str:
             raise TypeError("Wrong type")
+        if len(password) < 8:
+            return 'Too short length, at least 8 characters'
 
 
 class ValidPasswordTest(unittest.TestCase):
@@ -26,6 +30,9 @@ class ValidPasswordTest(unittest.TestCase):
 
     def test_type_password(self):
         self.assertRaises(TypeError, self.temp.checkPassword, False)
+
+    def test_password_length(self):
+        self.assertEqual('Too short length, at least 8 characters', self.temp.checkPassword("abc"))
 
     def tearDown(self):
         self.temp = None
