@@ -79,6 +79,25 @@ class TestStatement(unittest.TestCase):
                    "You earned 24 credits\n"
         self.assertEqual(statement(invoice, plays), response)
 
+    def test_statement_tragedy_lt_30_people(self):
+        invoice = {
+            "customer": "BigCo",
+            "performances": [
+                {
+                    "playID": "hamlet",
+                    "audience": 13
+                }
+            ]
+        }
+        plays = {
+            "hamlet": {"name": "Hamlet", "type": "tragedy"}
+        }
+        response = "Statement for BigCo\n" \
+                   " Hamlet: $400.00 (13 seats)\n" \
+                   "Amount owed is $400.00\n" \
+                   "You earned 0 credits\n"
+        self.assertEqual(statement(invoice, plays), response)
+
 
 if __name__ == '__main__':
     unittest.main()
