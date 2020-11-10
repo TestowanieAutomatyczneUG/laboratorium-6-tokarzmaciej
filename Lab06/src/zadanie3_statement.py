@@ -132,6 +132,17 @@ class TestStatement(unittest.TestCase):
         }
         self.assertRaises(ValueError, statement, invoice, plays)
 
+    def test_statement_without_performances(self):
+        invoice = {
+            "customer": "BigCo",
+            "performances": []
+        }
+        plays = {}
+        response = "Statement for BigCo\n" \
+                   "Amount owed is $0.00\n" \
+                   "You earned 0 credits\n"
+        self.assertEqual(statement(invoice, plays), response)
+
 
 if __name__ == '__main__':
     unittest.main()
