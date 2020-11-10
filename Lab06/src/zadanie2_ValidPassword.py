@@ -3,10 +3,10 @@ import doctest
 
 
 class ValidPassword:
-    def checkPassword(self, password):
+    def ValidPassword(self, password):
         """
         >>> validate=ValidPassword()
-        >>> validate.checkPassword(False)
+        >>> validate.ValidPassword(False)
         Traceback (most recent call last):
           File "C:\Program Files\JetBrains\PyCharm 2020.2.3\plugins\python\helpers\pycharm\docrunner.py", line 138, in __run
             exec(compile(example.source, filename, "single",
@@ -15,17 +15,17 @@ class ValidPassword:
           File "C:/Users/dell/testowanieLab6/Lab06/src/zadanie2_ValidPassword.py", line 11, in checkPassword
             raise TypeError("Wrong type")
         TypeError: Wrong type
-        >>> validate.checkPassword("abc")
+        >>> validate.ValidPassword("abc")
         'Too short length, at least 8 characters'
-        >>> validate.checkPassword('AaBcCdDeEfF')
+        >>> validate.ValidPassword('AaBcCdDeEfF')
         False
-        >>> validate.checkPassword('abcdefgh')
+        >>> validate.ValidPassword('abcdefgh')
         False
-        >>> validate.checkPassword('ABc123abc')
+        >>> validate.ValidPassword('ABc123abc')
         False
-        >>> validate.checkPassword('abc123abc')
+        >>> validate.ValidPassword('abc123abc')
         False
-        >>> validate.checkPassword('A?B123abc@')
+        >>> validate.ValidPassword('A?B123abc@')
         True
         """
         if type(password) != str:
@@ -55,25 +55,25 @@ class ValidPasswordTest(unittest.TestCase):
         self.temp = ValidPassword()
 
     def test_type_password(self):
-        self.assertRaises(TypeError, self.temp.checkPassword, False)
+        self.assertRaises(TypeError, self.temp.ValidPassword, False)
 
     def test_password_length(self):
-        self.assertEqual('Too short length, at least 8 characters', self.temp.checkPassword("abc"))
+        self.assertEqual('Too short length, at least 8 characters', self.temp.ValidPassword("abc"))
 
     def test_password_capital_letter1(self):
-        self.assertEqual(self.temp.checkPassword('AaBcCdDeEfF'), False)
+        self.assertEqual(self.temp.ValidPassword('AaBcCdDeEfF'), False)
 
     def test_password_capital_letter2(self):
-        self.assertEqual(self.temp.checkPassword('abcdefgh'), False)
+        self.assertEqual(self.temp.ValidPassword('abcdefgh'), False)
 
     def test_password_without_special_char_positive(self):
-        self.assertEqual(self.temp.checkPassword('ABc123abc'), False)
+        self.assertEqual(self.temp.ValidPassword('ABc123abc'), False)
 
     def test_password_without_special_char_negative(self):
-        self.assertEqual(self.temp.checkPassword('abc123abc'), False)
+        self.assertEqual(self.temp.ValidPassword('abc123abc'), False)
 
     def test_password_ACCEPT(self):
-        self.assertEqual(self.temp.checkPassword('A?B123abc@'), True)
+        self.assertEqual(self.temp.ValidPassword('A?B123abc@'), True)
 
     def tearDown(self):
         self.temp = None
