@@ -17,11 +17,21 @@ class ValidPassword:
         TypeError: Wrong type
         >>> validate.checkPassword("abc")
         'Too short length, at least 8 characters'
+        >>> validate.checkPassword('AaBcCdDeEfF')
+        True
+        >>> validate.checkPassword('abcdefgh')
+        False
+
         """
         if type(password) != str:
             raise TypeError("Wrong type")
         if len(password) < 8:
             return 'Too short length, at least 8 characters'
+        for letter in password:
+            capitalLetter = False
+            if letter.isupper():
+                capitalLetter = True
+            return capitalLetter
 
 
 class ValidPasswordTest(unittest.TestCase):
@@ -33,6 +43,12 @@ class ValidPasswordTest(unittest.TestCase):
 
     def test_password_length(self):
         self.assertEqual('Too short length, at least 8 characters', self.temp.checkPassword("abc"))
+
+    def test_password_capital_letter1(self):
+        self.assertEqual(self.temp.checkPassword('AaBcCdDeEfF'), True)
+
+    def test_password_capital_letter2(self):
+        self.assertEqual(self.temp.checkPassword('abcdefgh'), False)
 
     def tearDown(self):
         self.temp = None
