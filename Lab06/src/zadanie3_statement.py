@@ -1,6 +1,7 @@
 import math
 import unittest
 
+
 def statement(invoice, plays):
     total_amount = 0
     volume_credits = 0
@@ -31,10 +32,10 @@ def statement(invoice, plays):
         if "comedy" == play["type"]:
             volume_credits += math.floor(perf['audience'] / 5)
         # print line for this order
-        result += f' {play["name"]}: {format_as_dollars(this_amount/100)} ({perf["audience"]} seats)\n'
+        result += f' {play["name"]}: {format_as_dollars(this_amount / 100)} ({perf["audience"]} seats)\n'
         total_amount += this_amount
 
-    result += f'Amount owed is {format_as_dollars(total_amount/100)}\n'
+    result += f'Amount owed is {format_as_dollars(total_amount / 100)}\n'
     result += f'You earned {volume_credits} credits\n'
     return result
 
@@ -58,6 +59,26 @@ class TestStatement(unittest.TestCase):
                    "Amount owed is $650.00\n" \
                    "You earned 25 credits\n"
         self.assertEqual(statement(invoice, plays), response)
+
+    def test_statement_comedy_gt_20_people(self):
+        invoice = {
+            "customer": "BigCo",
+            "performances": [
+                {
+                    "playID": "as-like",
+                    "audience": 45
+                }
+            ]
+        }
+        plays = {
+            "as-like": {"name": "As You Like It", "type": "comedy"}
+        }
+        response = "Statement for BigCo\n" \
+                   " As You Like It: $660.00 (45 seats)\n" \
+                   "Amount owed is $660.00\n" \
+                   "You earned 24 credits\n"
+        self.assertEqual(statement(invoice, plays), response)
+
 
 if __name__ == '__main__':
     unittest.main()
